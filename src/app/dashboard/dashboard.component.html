@@ -1,0 +1,43 @@
+<div class="filters">
+  <button *ngFor="let filter of filters" (click)="loadData(filter.value)"
+    [class.active]="selectedDuration() === filter.value">
+    {{ filter.label }}
+  </button>
+</div>
+
+<div *ngIf="data() as kpi" class="kpi-cards">
+  <div class="kpi-card"> <span>Production</span> <span class="number">{{ kpi.count | number:'1.0-2' }}</span> meter
+  </div>
+  <div class="kpi-card"> <span>Avg Speed</span> <span class="number">{{ kpi.avgSpeed | number:'1.0-0' }}</span>
+    <span>RPM</span> </div>
+  <div class="kpi-card"> <span>Production Rate</span> <span class="number">{{ kpi.prodProductivity_rate | number:'1.2-2'
+      }}</span> <span>(m/min)</span> </div>
+  <div class="kpi-card"> <span>Stitches</span> <span class="number">{{ kpi.stitches | number:'1.2-2' }}</span>
+    <span>/10cm</span> </div>
+  <div class="kpi-card"> <span>Total Stop Duration</span> <span class="number">{{ (kpi.stopsDuration / 60000) |
+      number:'1.0-0' }}</span> <span>(min)</span> </div>
+</div>
+
+<div class="center">
+
+  <div class="chart-container">
+    <apx-chart [series]="chartOptions?.series" [chart]="chartOptions?.chart" [xaxis]="chartOptions?.xaxis"
+      [yaxis]="chartOptions?.yaxis" [tooltip]="chartOptions?.tooltip" [stroke]="chartOptions?.stroke"
+      [dataLabels]="chartOptions?.dataLabels" [grid]="chartOptions?.grid" [responsive]="chartOptions?.responsive">
+    </apx-chart>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div class="card shadow p-4">
+      <apx-chart *ngIf="performanceChartOptions" [series]="performanceChartOptions.series"
+        [chart]="performanceChartOptions.chart" [labels]="performanceChartOptions.labels"
+        [plotOptions]="performanceChartOptions.plotOptions" [fill]="performanceChartOptions.fill"></apx-chart>
+    </div>
+
+    <div class="card shadow p-4">
+      <apx-chart *ngIf="availabilityChartOptions" [series]="availabilityChartOptions.series"
+        [chart]="availabilityChartOptions.chart" [labels]="availabilityChartOptions.labels"
+        [plotOptions]="availabilityChartOptions.plotOptions" [fill]="availabilityChartOptions.fill"></apx-chart>
+    </div>
+  </div>
+</div>
